@@ -17,10 +17,7 @@ import java.util.List;
 @SuperBuilder
 public class CompilationDto {
     Long id;
-    
     List<EventShortDto> events;
-
     Boolean pinned;
-
     String title;
 }
