@@ -24,7 +24,7 @@ public class StatClient extends BaseClient {
     private static final String END_DEFAULT = "2200-01-01 01:01:01";
 
     @Autowired
-    public StatClient(@Value("${stat-server.url}") String serverUrl, RestTemplateBuilder builder) {
+    public StatClient(@Value("${stats-server.url}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
