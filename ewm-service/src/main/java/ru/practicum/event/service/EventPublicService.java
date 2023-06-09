@@ -50,6 +50,7 @@ public class EventPublicService {
             throw new ObjectNotFoundException("The event hasn't been published");
         }
         EventFullDto fullDto = EventMapper.toFullDto(event);
+        saveHit(request, id);
         if (fullDto.getViews() == null) {
             fullDto.setViews(1L);
         } else {
