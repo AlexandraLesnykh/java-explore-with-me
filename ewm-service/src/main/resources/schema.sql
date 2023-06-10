@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS request
     created      TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
     event_id     BIGINT                                  NOT NULL,
     requester_id BIGINT                                  NOT NULL,
-    status       VARCHAR(512)                            NOT NULL,
+    status       VARCHAR(50)                             NOT NULL,
     CONSTRAINT pk_request PRIMARY KEY (id),
     CONSTRAINT fk_requester_id_events FOREIGN KEY (requester_id) REFERENCES users (id),
     CONSTRAINT fk_event_id_events FOREIGN KEY (event_id) REFERENCES events (id),

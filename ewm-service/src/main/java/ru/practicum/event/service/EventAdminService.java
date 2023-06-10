@@ -1,5 +1,6 @@
 package ru.practicum.event.service;
 
+import lombok.AllArgsConstructor;
 import model.ViewStatsDto;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class EventAdminService {
     private final EventRepository eventRepository;
 
@@ -40,14 +42,6 @@ public class EventAdminService {
     private final RequestRepository requestRepository;
 
     private final StatClient statClient;
-
-    public EventAdminService(EventRepository eventRepository, CategoryService categoryService, UserService userService, RequestRepository requestRepository, StatClient statClient) {
-        this.eventRepository = eventRepository;
-        this.categoryService = categoryService;
-        this.userService = userService;
-        this.requestRepository = requestRepository;
-        this.statClient = statClient;
-    }
 
     public List<EventFullDto> getEvent(List<Long> users, List<String> states, List<Long> categories, String rangeStart,
                                        String rangeEnd, int from, int size) {

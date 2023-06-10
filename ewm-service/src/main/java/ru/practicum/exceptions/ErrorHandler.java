@@ -11,8 +11,8 @@ import java.util.Collections;
 
 public class ErrorHandler {
 
-    StringWriter sw = new StringWriter();
-    PrintWriter pw = new PrintWriter(sw);
+    private final StringWriter sw = new StringWriter();
+    private final PrintWriter pw = new PrintWriter(sw);
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.CONFLICT)

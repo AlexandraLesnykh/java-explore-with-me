@@ -19,7 +19,7 @@ public class PublicEventController {
 
     @GetMapping(value = "/{id}")
     public EventFullDto getEventPub(@PathVariable Long id, HttpServletRequest request) {
-        return eventPublicService.getEvent(id, request);
+        return eventPublicService.getEvent(id, request.getRemoteAddr());
     }
 
     @GetMapping
@@ -33,6 +33,7 @@ public class PublicEventController {
                                                @RequestParam(name = "from", defaultValue = "0") int from,
                                                @RequestParam(name = "size", defaultValue = "10") int size,
                                                HttpServletRequest request) {
-        return eventPublicService.getSearchEvent(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
+        return eventPublicService.getSearchEvent(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort,
+                from, size, request.getRemoteAddr());
     }
 }

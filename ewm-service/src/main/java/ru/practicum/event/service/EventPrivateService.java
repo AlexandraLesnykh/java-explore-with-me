@@ -1,5 +1,6 @@
 package ru.practicum.event.service;
 
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class EventPrivateService {
     private final EventRepository eventRepository;
 
@@ -45,13 +47,6 @@ public class EventPrivateService {
 
     private final RequestRepository requestRepository;
 
-    public EventPrivateService(EventRepository eventRepository, CategoryService categoryService, UserService userService,
-                               RequestRepository requestRepository) {
-        this.eventRepository = eventRepository;
-        this.categoryService = categoryService;
-        this.userService = userService;
-        this.requestRepository = requestRepository;
-    }
 
     public EventFullDto saveEvent(NewEventDto dto, Long userId) {
         if (dto.getEventDate().isBefore(LocalDateTime.now())) {

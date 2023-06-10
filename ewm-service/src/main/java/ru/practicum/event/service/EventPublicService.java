@@ -1,5 +1,6 @@
 package ru.practicum.event.service;
 
+import lombok.AllArgsConstructor;
 import model.EndpointHitDto;
 import model.ViewStatsDto;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,6 @@ import ru.practicum.exceptions.ObjectNotFoundException;
 import ru.practicum.request.model.Status;
 import ru.practicum.request.repository.RequestRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@AllArgsConstructor
 public class EventPublicService {
     private final EventRepository eventRepository;
 
@@ -37,20 +38,14 @@ public class EventPublicService {
 
     private final StatClient statClient;
 
-    public EventPublicService(EventRepository eventRepository, CategoryRepository categoryRepository, RequestRepository requestRepository, StatClient statClient) {
-        this.eventRepository = eventRepository;
-        this.categoryRepository = categoryRepository;
-        this.requestRepository = requestRepository;
-        this.statClient = statClient;
-    }
 
-    public EventFullDto getEvent(Long id, HttpServletRequest request) {
+    public EventFullDto getEvent(Long id, String ip) {
         Event event = eventRepository.findById(id).orElseThrow(() -> new ObjectNotFoundException("Event with id=" + id + " was not found"));
         if (event.getState() != State.PUBLISHED) {
             throw new ObjectNotFoundException("The event hasn't been published");
         }
         EventFullDto fullDto = EventMapper.toFullDto(event);
-        saveHit(request, id);
+        saveHit(ip, id);
         if (fullDto.getViews() == null) {
             fullDto.setViews(1L);
         } else {
@@ -60,7 +55,9 @@ public class EventPublicService {
     }
 
     @Transactional
-    public List<EventShortDto> getSearchEvent(String text, List<Long> categories, Boolean paid, String rangeStart, String rangeEnd, Boolean onlyAvailable, String sort, int from, int size, HttpServletRequest request) {
+    public List<EventShortDto> getSearchEvent(String text, List<Long> categories, Boolean paid, String rangeStart,
+                                              String rangeEnd, Boolean onlyAvailable, String sort, int from, int size,
+                                              String ip) {
         LocalDateTime dateStartSearch = LocalDateTime.now().plusSeconds(1L);
         LocalDateTime dateEndSearch = LocalDateTime.now().plusYears(99L);
         if (rangeStart != null) {
@@ -91,7 +88,7 @@ public class EventPublicService {
             eventShorts.stream()
                     .sorted(Comparator.comparing(EventShortDto::getViews));
         }
-        saveHit(request, null);
+        saveHit(ip, null);
         if (eventShorts.isEmpty()) {
             throw new BadRequestException("Wrong request");
         }
@@ -131,11 +128,11 @@ public class EventPublicService {
         return dto.size() > 0 ? dto.get(0).getHits() : 0L;
     }
 
-    private void saveHit(HttpServletRequest request, Long eventId) {
+    private void saveHit(String ip, Long eventId) {
         EndpointHitDto endpointHitDto = new EndpointHitDto();
         endpointHitDto.setApp("ewm-service");
         endpointHitDto.setTimestamp(LocalDateTime.now());
-        endpointHitDto.setIp(request.getRemoteAddr());
+        endpointHitDto.setIp(ip);
         if (eventId == null) {
             endpointHitDto.setUri("/events");
         } else {
