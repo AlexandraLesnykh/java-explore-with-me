@@ -29,7 +29,8 @@ public class StatService {
             if (unique) {
                 return statRepository.getUniqueStatsUri(start, end, uris);
             } else {
-                return statRepository.getStatsUri(start, end, uris);
+                List<ViewStatsDto> list = statRepository.getStatsUri(start, end, uris);
+                return list;
             }
         }
     }
