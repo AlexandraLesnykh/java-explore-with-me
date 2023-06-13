@@ -26,11 +26,9 @@ public class Comment {
     String content;
     LocalDateTime created;
     LocalDateTime updated;
-    
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
-
     @ManyToOne
     @JoinColumn(name = "event_id")
     Event event;
