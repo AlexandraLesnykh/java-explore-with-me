@@ -59,9 +59,9 @@ public class CommentService {
         User user = userService.findById(userId);
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new ObjectNotFoundException("The comment hasn't been found"));
-        if (comment.getUser().getId() != userId || comment.getEvent().getInitiator().getId() != userId) {
+        if (comment.getUser().getId() != userId) {
             throw new ConflictException("User have no rights to delete the comment");
-        } //удалить комментарий может либо автор, либо инициатор события
+        } //удалить комментарий может только автор
         commentRepository.delete(comment);
     }
 
