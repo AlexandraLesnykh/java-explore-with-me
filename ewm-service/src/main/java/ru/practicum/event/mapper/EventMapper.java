@@ -1,4 +1,4 @@
-package ru.practicum.event.Mapper;
+package ru.practicum.event.mapper;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -48,20 +48,7 @@ public class EventMapper {
                 .build();
     }
 
-    public static Event toEntity(NewEventDto dto) {
-        return Event.builder()
-                .annotation(dto.getAnnotation())
-                .description(dto.getDescription())
-                .eventDate(dto.getEventDate())
-                .location(dto.getLocation())
-                .paid(dto.getPaid())
-                .participantLimit(dto.getParticipantLimit())
-                .requestModeration(dto.getRequestModeration())
-                .title(dto.getTitle())
-                .build();
-    }
-
-    public static Event toEntitySave(NewEventDto dto, Category categorie, User initiator) {
+    public static Event toEntitySave(NewEventDto dto, Category category, User initiator) {
         return Event.builder()
                 .annotation(dto.getAnnotation())
                 .description(dto.getDescription())
@@ -73,7 +60,7 @@ public class EventMapper {
                 .title(dto.getTitle())
                 .createdOn(LocalDateTime.now())
                 .initiator(initiator)
-                .category(categorie)
+                .category(category)
                 .state(State.PENDING)
                 .build();
     }
