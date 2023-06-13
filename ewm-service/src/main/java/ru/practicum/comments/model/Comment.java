@@ -27,7 +27,6 @@ public class Comment {
     String content;
 
     LocalDateTime created;
-
     
     LocalDateTime updated;
 
