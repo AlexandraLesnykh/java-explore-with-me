@@ -23,13 +23,10 @@ public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-
     String content;
-
     LocalDateTime created;
-    
     LocalDateTime updated;
-
+    
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
