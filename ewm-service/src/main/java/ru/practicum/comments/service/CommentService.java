@@ -38,7 +38,7 @@ public class CommentService {
     }
 
     public UpdatedCommentDto patchComment(NewCommentDto dto, Long userId, Long commentId) {
-        User user = userService.findById(userId);
+        userService.findById(userId);
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new ObjectNotFoundException("The comment hasn't been found"));
         if (comment.getUser().getId() != userId) {
@@ -50,13 +50,12 @@ public class CommentService {
             throw new ConflictException("There is nothing to update");
         }
         comment.setUpdated(LocalDateTime.now());
-
         commentRepository.save(comment);
         return CommentMapper.toUpdatedCommentDto(comment);
     }
 
     public void deleteComment(Long userId, Long commentId) {
-        User user = userService.findById(userId);
+        userService.findById(userId);
         Comment comment = commentRepository.findById(commentId).orElseThrow(() ->
                 new ObjectNotFoundException("The comment hasn't been found"));
         if (comment.getUser().getId() != userId) {
@@ -73,7 +72,7 @@ public class CommentService {
     }
 
     public List<CommentDto> getAllCommentsByEvent(Long eventId) { //подборка комментариев к определенному событию
-        Event event = eventPublicService.findById(eventId);
+        eventPublicService.findById(eventId);
         List<Comment> comments = commentRepository.findAllByEventId(eventId);
         return comments.stream()
                 .map(CommentMapper::toCommentDto)
@@ -87,7 +86,7 @@ public class CommentService {
     }
 
     public List<CommentDto> getAllCommentsByUser(Long userId) { //подборка комментариев определенного пользователя
-        User user = userService.findById(userId);
+        userService.findById(userId);
         List<Comment> comments = commentRepository.findAllByUserId(userId);
         return comments.stream()
                 .map(CommentMapper::toCommentDto)

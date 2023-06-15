@@ -1,11 +1,7 @@
 package ru.practicum.comments.dto;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
 import ru.practicum.event.dto.EventShortDto;
 import ru.practicum.user.dto.UserShortDto;
 
@@ -17,13 +13,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Data
-@SuperBuilder
+@Builder
 public class UpdatedCommentDto {
     long id;
 
-    @NotBlank
-    @Size(min = 2, max = 3000)
-    String content;
+    @NotBlank @Size(min = 2, max = 3000) String content;
 
     LocalDateTime updated;
 

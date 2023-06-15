@@ -9,7 +9,10 @@ import ru.practicum.event.model.Event;
 import ru.practicum.user.mapper.UserMapper;
 import ru.practicum.user.model.User;
 
-public class CommentMapper {
+public final class CommentMapper {
+    private CommentMapper() {
+    }
+
     public static Comment toEntity(NewCommentDto dto, User user, Event event) {
         return Comment.builder()
                 .content(dto.getContent())
