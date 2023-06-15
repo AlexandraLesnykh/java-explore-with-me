@@ -14,12 +14,8 @@ import java.time.LocalDateTime;
 @Builder
 public class CommentDto {
     long id;
-
     String content;
-
     LocalDateTime created;
-
     UserShortDto user;
-
     EventShortDto event;
 }
