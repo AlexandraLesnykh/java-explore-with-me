@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class UpdatedCommentDto {
+    
     long id;
 
     @NotBlank @Size(min = 2, max = 3000) String content;
